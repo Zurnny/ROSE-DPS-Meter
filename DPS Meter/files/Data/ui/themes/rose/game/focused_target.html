@@ -71,6 +71,17 @@ pcall(function()
         e:SetAttribute('sp-shown', text)
         e.style.width = (#text * 7 + 2) .. 'dp'
     end
+    -- time left until the kill: the target's HP now / damage per second so far
+    local function left()
+        if fight.done then return '0s' end
+        if fight.idle >= 8 then return '-' end
+        local avg = fight.total / math.max(1, fight.seconds)
+        if not last_hp or avg <= 0 then return '-' end
+        local secs = math.ceil(last_hp / avg)
+        if secs >= 3600 then return '1h+' end
+        if secs >= 60 then return math.floor(secs / 60) .. 'm ' .. (secs % 60) .. 's' end
+        return secs .. 's'
+    end
     local function render()
         local box = el('sp-dps')
         if not box then return end
@@ -81,7 +92,7 @@ pcall(function()
         local avg = fight.total / math.max(1, fight.seconds)
         put('sp-dps-now', num(now))
         put('sp-dps-avg', num(avg))
-        put('sp-dps-time', fight.seconds .. 's')
+        put('sp-dps-time', left())
         box:SetClass('done', fight.done == true)              -- green: target defeated
         box:SetClass('paused', not fight.done and fight.idle >= 8)   -- grey: nobody has hit it for 8s
         box:SetClass('active', true)
@@ -209,7 +220,7 @@ end)
             <gauge id="target-health" class="ui-vitals horizontal-sm-md red" animation-enabled="false" data-if="show_health" data-attr-gmax="max_hp" data-attr-gvalue="hp">
                 <span><label id="value" /> / <label id="max" /></span>
             </gauge>
-            <div id="sp-dps"><span class="sp-dps-lbl">DPS</span><input id="sp-dps-now" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><span class="sp-dps-lbl">Avg</span><input id="sp-dps-avg" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><input id="sp-dps-time" class="sp-dps-num" type="text" readonly="" value="" /></div>
+            <div id="sp-dps"><span class="sp-dps-lbl">DPS</span><input id="sp-dps-now" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><span class="sp-dps-lbl">Avg</span><input id="sp-dps-avg" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><span class="sp-dps-lbl">Kill in</span><input id="sp-dps-time" class="sp-dps-num" type="text" readonly="" value="" /></div>
             <div id="target-statuses" class="ui-status-icons">
                 <span class="target-status-icon" data-for="status, index : statuses" data-attr-status-index="index"><img data-attr-sprite="status.sprite"/></span>
             </div>

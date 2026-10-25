@@ -18,14 +18,14 @@
                (yellow labels, white numbers). The numbers are read-only text boxes
                that redraw their own text, so updating them every second never
                creates new text elements (which made the game log font warnings). */
-            #sp-dps { display: none; margin: 2dp auto 0 auto; width: 228dp; height: 16dp;
+            #sp-dps { display: none; margin: 2dp auto 0 auto; width: 280dp; height: 16dp; white-space: nowrap;
                       flex-direction: row; justify-content: center; align-items: center;
                       font-family: Nunito; font-weight: 800; font-size: 12dp; font-effect: outline(1dp black); }
             #sp-dps.active { display: flex; }
-            .sp-dps-lbl { color: yellow; margin-right: 3dp; font-effect: outline(1dp black); }
-            .sp-dps-dot { color: rgb(170, 170, 170); margin: 0 5dp; font-effect: outline(1dp black); }
+            .sp-dps-lbl { color: yellow; margin-right: 3dp; white-space: nowrap; flex-shrink: 0; font-effect: outline(1dp black); }
+            .sp-dps-dot { color: rgb(170, 170, 170); margin: 0 3dp; flex-shrink: 0; font-effect: outline(1dp black); }
             .sp-dps-num {
-                display: block; height: 16dp; padding: 0; margin: 0;
+                display: block; height: 16dp; padding: 0; margin: 0; flex-shrink: 0;
                 decorator: none; background: transparent; border: 0;
                 font-family: Nunito; font-weight: 800; font-size: 12dp; line-height: 16dp;
                 color: white; font-effect: outline(1dp black); text-align: left;

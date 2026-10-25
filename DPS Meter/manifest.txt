@@ -1,4 +1,4 @@
 ; Update list for DPS Meter. Upload this next to mod.ini and the files folder.
-version=1.1
-0c7866090ff125133b03aa3ba1baf03fdcc72b25|mod.ini
-af49064b9c41176ca9b14808734d16fe72afbab2|files/Data/ui/themes/rose/game/focused_target.html
+version=1.2
+9fb5abb75e431627ef4c366ef465eab199019817|mod.ini
+93620a573f10379dc2c4042cc96480979e3543e0|files/Data/ui/themes/rose/game/focused_target.html

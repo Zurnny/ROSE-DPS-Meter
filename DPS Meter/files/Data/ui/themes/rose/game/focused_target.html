@@ -14,28 +14,25 @@
             .target-status-icon { pointer-events: auto; }
 
             /* ---- DPS meter (add-on, filled in by the script below) ---- */
-            #sp-dps
-            {
-                display: none; margin: 3dp auto 0 auto; width: 228dp; box-sizing: border-box;
-                padding: 2dp 6dp; text-align: center; font-size: 12dp; line-height: 16dp;
-                background-color: rgba(0, 0, 0, 210);
-                border: 1dp rgb(150, 150, 150);
-                color: rgb(230, 230, 230); font-effect: outline(1dp black);
-            }
-            #sp-dps.active { display: block; }
-            /* The line is a read-only text box: it redraws its own text, so changing
-               it every second never creates new text elements (which made the
-               game log "No font face defined" warnings). */
-            #sp-dps-line
-            {
-                display: block; width: 100%; height: 16dp; padding: 0; margin: 0;
+            /* DPS meter: plain outlined text under the HP bar, like the HP numbers
+               (yellow labels, white numbers). The numbers are read-only text boxes
+               that redraw their own text, so updating them every second never
+               creates new text elements (which made the game log font warnings). */
+            #sp-dps { display: none; margin: 2dp auto 0 auto; width: 228dp; height: 16dp;
+                      flex-direction: row; justify-content: center; align-items: center;
+                      font-family: Nunito; font-weight: 800; font-size: 12dp; font-effect: outline(1dp black); }
+            #sp-dps.active { display: flex; }
+            .sp-dps-lbl { color: yellow; margin-right: 3dp; font-effect: outline(1dp black); }
+            .sp-dps-dot { color: rgb(170, 170, 170); margin: 0 5dp; font-effect: outline(1dp black); }
+            .sp-dps-num {
+                display: block; height: 16dp; padding: 0; margin: 0;
                 decorator: none; background: transparent; border: 0;
                 font-family: Nunito; font-weight: 800; font-size: 12dp; line-height: 16dp;
-                color: rgb(255, 230, 110); text-align: center;
+                color: white; font-effect: outline(1dp black); text-align: left;
                 pointer-events: none; tab-index: none; image-color: rgb(255, 255, 255);
             }
-            #sp-dps.done #sp-dps-line { color: rgb(150, 220, 110); }
-            #sp-dps.paused #sp-dps-line { color: rgb(180, 180, 180); }
+            #sp-dps.done .sp-dps-num { color: rgb(150, 220, 110); }
+            #sp-dps.paused .sp-dps-num { color: rgb(180, 180, 180); }
             #sp-dps-source { display: none; }
             /* Repeating 1 second timer: two identical animations swapped each time one ends */
             @keyframes sp-dps-tick-a { from { opacity: 0; } to { opacity: 0; } }
@@ -66,22 +63,27 @@ pcall(function()
     -- The line is a read-only text box: only its value changes, so no new text
     -- elements are created each second (that caused font warnings in the log).
     local shown = nil
+    -- each number sits in its own read-only text box, sized to its text
+    local function put(id, text)
+        local e = el(id)
+        if not e or e:GetAttribute('sp-shown') == text then return end
+        e:SetAttribute('value', text)
+        e:SetAttribute('sp-shown', text)
+        e.style.width = (#text * 7 + 2) .. 'dp'
+    end
     local function render()
-        local box, line = el('sp-dps'), el('sp-dps-line')
-        if not box or not line then return end
+        local box = el('sp-dps')
+        if not box then return end
         if not fight or fight.total <= 0 then box:SetClass('active', false); return end
         local recent = 0
         for _, d in ipairs(fight.recent) do recent = recent + d end
         local now = #fight.recent > 0 and recent / #fight.recent or 0
         local avg = fight.total / math.max(1, fight.seconds)
-        local head
-        if fight.done then head = 'Defeated'
-        elseif fight.idle >= 8 then head = 'Paused'
-        else head = 'DPS ' .. num(now) end
-        local text = head .. '  ·  Avg ' .. num(avg) .. '  ·  ' .. fight.seconds .. 's'
-        if text ~= shown then line:SetAttribute('value', text); shown = text end
-        box:SetClass('done', fight.done == true)
-        box:SetClass('paused', not fight.done and fight.idle >= 8)
+        put('sp-dps-now', num(now))
+        put('sp-dps-avg', num(avg))
+        put('sp-dps-time', fight.seconds .. 's')
+        box:SetClass('done', fight.done == true)              -- green: target defeated
+        box:SetClass('paused', not fight.done and fight.idle >= 8)   -- grey: nobody has hit it for 8s
         box:SetClass('active', true)
     end
     local function tick()
@@ -207,7 +209,7 @@ end)
             <gauge id="target-health" class="ui-vitals horizontal-sm-md red" animation-enabled="false" data-if="show_health" data-attr-gmax="max_hp" data-attr-gvalue="hp">
                 <span><label id="value" /> / <label id="max" /></span>
             </gauge>
-            <div id="sp-dps"><input id="sp-dps-line" type="text" readonly="" value="" /></div>
+            <div id="sp-dps"><span class="sp-dps-lbl">DPS</span><input id="sp-dps-now" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><span class="sp-dps-lbl">Avg</span><input id="sp-dps-avg" class="sp-dps-num" type="text" readonly="" value="" /><span class="sp-dps-dot">·</span><input id="sp-dps-time" class="sp-dps-num" type="text" readonly="" value="" /></div>
             <div id="target-statuses" class="ui-status-icons">
                 <span class="target-status-icon" data-for="status, index : statuses" data-attr-status-index="index"><img data-attr-sprite="status.sprite"/></span>
             </div>

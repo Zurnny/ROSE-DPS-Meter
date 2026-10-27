@@ -10,8 +10,8 @@
         <link type="text/rcss" href="../styles/sp_addons_steampunk.css" />
         <style>
             /* ==== Parts of the page for one look only (the other look's part stays hidden) ==== */
-            .sp-theme-default .sp-only-steampunk { display: none !important; }
-            .sp-theme-steampunk .sp-only-default { display: none !important; }
+            #focused-target.sp-theme-default .sp-only-steampunk { display: none; }
+            #focused-target.sp-theme-steampunk .sp-only-default { display: none; }
 
             /* ==== Both looks ==== */
             body { position: absolute; top: 50dp; left: 50%; width: 240dp; margin-left: -120dp; z-index: -20; pointer-events: none; }

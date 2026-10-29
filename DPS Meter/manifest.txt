@@ -1,8 +1,8 @@
 ; Update list for DPS Meter. Upload this next to mod.ini and the files folder.
-version=2.7
-db603f29bdadfae98f4f23ed51fa0b51fc0475ab|mod.ini
+version=2.8
+ca3f196ad293f8078be0782dd9e0a0cc593ab1f2|mod.ini
 08efde40e7e4b0171c18ad0f7a8b9b8a77b4ff3f|files/Data/ui/sp_addons/dps_meter.txt
 7c5a98db66a8528efd1efb2c9939fbffa3352f21|files/Data/ui/themes/rose/game/focused_target.html
 cfe4c3a63e20ee55e3b512b3366654398eafeeed|files/Data/ui/themes/rose/game/options_bgfx.html
 c9735755117dd4fa76a010d9d13085fefdd2dfb1|files/Data/ui/themes/rose/styles/sp_addons_steampunk.css
-80a26b6252e1b6dde9cd64c23911e2d2adae0d54|files/Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css
+62a3c46f80ba6f216e811173802298d1936215ff|files/Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css

@@ -1,10 +1,10 @@
 ; Update list for DPS Meter. Upload this next to mod.ini and the files folder.
-version=2.14
-cb14d17d9934dfa6bb28afc10caf2a871acbebf6|mod.ini
+version=2.15
+b53fd8a95a5459413e3616fb32dd33fc53d532f7|mod.ini
 08efde40e7e4b0171c18ad0f7a8b9b8a77b4ff3f|files/Data/ui/sp_addons/dps_meter.txt
-7c5a98db66a8528efd1efb2c9939fbffa3352f21|files/Data/ui/themes/rose/game/focused_target.html
+110c121202241ed6d8466a2b26c79462e1de12e4|files/Data/ui/themes/rose/game/focused_target.html
 1448712518c250158022e27eee1408bdd42eadec|files/Data/ui/themes/rose/game/menu.html
-4afc0dd827e57b69b5a89fb34676c6c7ec0f575a|files/Data/ui/themes/rose/game/options_bgfx.html
+7107b69fefdb768eb7b6e3919c3cf6cd2f99c7a8|files/Data/ui/themes/rose/game/options_bgfx.html
 2d3b3ec1fd292a99466dd3d88e88f41744e0bc45|files/Data/ui/themes/rose/game/sp_addons_window.html
 d49230528a09bf1485a759277d682bf3a6d98230|files/Data/ui/themes/rose/imgs/sp_addons_menu.dds
 c9735755117dd4fa76a010d9d13085fefdd2dfb1|files/Data/ui/themes/rose/styles/sp_addons_steampunk.css
